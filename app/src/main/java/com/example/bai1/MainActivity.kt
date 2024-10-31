@@ -38,16 +38,19 @@ class MainActivity : ComponentActivity() {
 
         // Thiết lập sự kiện click cho nút show
         show.setOnClickListener {
+            // Lấy và kiểm tra đầu vào từ EditText
             val checkText = editText.text.toString()
             if (!isNumeric(checkText) || checkText.toInt() <= 0) {
-                textView.text = "nhap lai"
+                textView.text = "Vui lòng nhập lại số nguyên dương"
                 return@setOnClickListener
             }
 
+            // Lấy giá trị n từ EditText sau khi đã xác thực
             val n = checkText.toInt()
             val items = mutableListOf<Int>()
             val selectedId = radioGroup.checkedRadioButtonId
 
+            // Kiểm tra RadioButton được chọn và thêm giá trị tương ứng vào danh sách
             when (selectedId) {
                 sochan.id -> {
                     for (i in 0..n) {
@@ -67,21 +70,21 @@ class MainActivity : ComponentActivity() {
                     }
                 }
                 else -> {
-                    textView.text = "nhap lai"
+                    textView.text = "Vui lòng chọn một tùy chọn"
                     return@setOnClickListener
                 }
             }
 
-            // Thiết lập adapter cho ListView
+            // Thiết lập adapter cho ListView để hiển thị kết quả
             val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, items)
             listView.adapter = adapter
             listView.setOnItemClickListener { _, _, i, _ ->
-                textView.text = "Position: $i\nData: ${items[i]}"
+                textView.text = "Vị trí: $i\nGiá trị: ${items[i]}"
             }
         }
     }
 
-    // Hàm kiểm tra chuỗi có phải là số nguyên dương hay không
+    // Hàm kiểm tra chuỗi có phải là số nguyên hay không
     fun isNumeric(input: String): Boolean {
         return input.toIntOrNull() != null
     }
